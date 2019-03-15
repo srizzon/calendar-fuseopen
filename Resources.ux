@@ -1,0 +1,14 @@
+<ux:Resources>
+
+	<!-- Colors -->
+	<float4 ux:Global="PrimaryColor"     ux:Value="#FFFFFF"/>
+	<float4 ux:Global="SecondColor"      ux:Value="#272932"/>
+	<!-- End Colors -->
+
+	<!-- Fonts -->
+	<Font File="assets/fonts/Montserrat-Black.otf" ux:Global="MontBlack" />
+	<Font File="assets/fonts/Montserrat-Regular.otf" ux:Global="MontRegular" />
+	<Font File="assets/fonts/Montserrat-Heavy.otf" ux:Global="MontHeavy" />
+	<!-- End Fonts -->
+	
+</ux:Resources>

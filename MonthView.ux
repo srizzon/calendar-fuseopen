@@ -1,0 +1,110 @@
+<Page ux:Class="MonthView" Remove="None">
+	<!-- You cannot use Activated="{activated}" on the `Page` itself due to JavaScript scope rules -->
+	<Selection MaxCount="1" MinCount="0" Value="{daySelected}" />
+
+	<Activated Handler="{activated}" />
+	
+	<Router ux:Dependency="routerCalendar"/>
+	<JavaScript File="MonthView.js"/>
+
+	<Rectangle Color="#FFF0" Visibility="Hidden" ux:Name="blockView"/>
+	
+	<DockPanel Color="{Resource PrimaryColor}" Margin="0,40,0,0">
+		<Grid Dock="Top" Columns="auto,1*,auto" CellSpacing="5" Margin="0,0,0,5" Width="90%" Height="10%">
+			<Panel Color="{Resource PrimaryColor}" Width="35" Height="35">
+				<Image File="assets/icons/arrow_left.png" Width="20" Color="{Resource SecondColor}"/>
+				<Clicked>
+					<Callback Handler="{changeMonth}" />
+					<ModifyRoute Bookmark="prevMonth" Style="fromLeft" Delay=".1"/>
+				</Clicked>
+			</Panel>
+			<Panel Color="{Resource PrimaryColor}">
+				<WhileFalse Value="{isLoading}">
+					<Text FontSize="20" Color="{Resource SecondColor}" Value="{toUpper({monthLabel})}" TextAlignment="Center" Alignment="VerticalCenter" Font="MontBlack"/>
+				</WhileFalse>
+				<WhileTrue Value="{isLoading}">
+					<Text FontSize="20" Color="{Resource SecondColor}" Value="Loading..." TextAlignment="Center" Alignment="VerticalCenter" Font="MontBlack"/>
+				</WhileTrue>
+			</Panel>
+			<Panel Color="{Resource PrimaryColor}" Width="35" Height="35">
+				<Image File="assets/icons/arrow_right.png" Width="20" Color="{Resource SecondColor}"/>
+				<Clicked>
+					<Callback Handler="{changeMonth}" />
+					<ModifyRoute Bookmark="nextMonth" Style="fromRight" Delay=".1"/>
+				</Clicked>
+			</Panel>
+		</Grid>
+
+		<Grid ColumnCount="7" CellSpacing="3" DefaultRow="1*" Rows="auto" Height="70%" Width="90%" Alignment="TopCenter">
+			<Each Items="{daysOfWeek}">
+				<Panel Color="{Resource PrimaryColor}">
+					<Text FontSize="15" Value="{= data()}" TextAlignment="Center" Color="Resource SecondColor"/>
+				</Panel>
+			</Each>
+			<Each Items="{days}" MatchKey="type">
+
+				<Circle ux:Name="CircleDay" Color="{Resource PrimaryColor}" ux:Template="fill" Width="80%" Height="90%">
+					<Stroke ux:Name="StrokeDate" Color="#00000060" />
+
+					<Grid>
+						<Text ux:Name="TextDay" FontSize="15" Color="#222" Alignment="Center" Value="{dayOfMonth}" Margin="6" Font="MontRegular">
+						</Text>
+						<WhileTrue Value="{isToday}">
+							<Circle Color="#fc5f65" Width="4" />
+						</WhileTrue>
+					</Grid>
+				</Circle>
+
+				<Circle ux:Name="CircleDay" Color="{Resource PrimaryColor}" ux:Template="day" Width="80%" Height="90%" Clicked="{openDay}">
+					<Stroke ux:Name="StrokeDate" Color="Resource SecondColor" />
+
+					<Selectable ux:Name="MySelectable" Value="{dayOfMonth}" />
+
+					<Grid>
+						<Text ux:Name="TextDay" FontSize="15" Color="#222" Alignment="Center" Value="{dayOfMonth}" Margin="6" Font="MontRegular">
+							<WhileSelected>
+								<Change CircleDay.Color="Resource SecondColor" Duration=".3" />
+								<Change TextDay.Color="Resource PrimaryColor" Duration=".3" />
+							</WhileSelected>
+						</Text>
+						<WhileTrue Value="{isToday}">
+							<Circle Color="#fc5f65" Width="4" />
+						</WhileTrue>
+					</Grid>
+
+					<Deselected>
+						<Scale Factor=".8" Duration="0.2" Easing="QuadraticInOut"/>
+					</Deselected>
+
+					<Tapped>
+						<Scale Factor="1.2" Duration="0.3" Easing="CubicIn"/>
+						<ToggleSelection />
+					</Tapped>
+				</Circle>
+			</Each>
+		</Grid>
+
+	</DockPanel>
+	
+	<Transition Style="fromLeft" Direction="ToActive">
+		<Move X="-1" RelativeTo="ParentSize" Duration="0.4"/>
+	</Transition>
+	<Transition Style="fromRight" Direction="ToActive">
+		<Move X="1" RelativeTo="ParentSize" Duration="0.4"/>
+	</Transition>
+	
+	<Transition Style="fromRight" Direction="ToInactive">
+		<Move X="-1" RelativeTo="ParentSize"/>
+	</Transition>
+	<Transition Style="fromLeft" Direction="ToInactive">
+		<Move X="1" RelativeTo="ParentSize"/>
+	</Transition>
+	
+	<Transition To="day">
+		<Change blockView.Color="#4448" Duration="0.4"/>
+	</Transition>
+	
+	<Transition>
+		<Move Y="1" RelativeTo="ParentSize"/>
+	</Transition>
+</Page>

@@ -1,0 +1,10 @@
+<Page ux:Class="CalendarView">
+	<Router ux:Dependency="routerCalendar"/>
+	
+	<JavaScript File="CalendarView.js" />
+
+	<Navigator ux:Name="calNav">
+		<MonthView ux:Template="month" routerCalendar="routerCalendar" SwipeBack="None" Height="65%" Alignment="Top" Navigator.Reuse="Removed" />
+		<DayView ux:Template="day" routerCalendar="routerCalendar" ZOffset="1" Navigator.Reuse="Removed" />
+	</Navigator>
+</Page>

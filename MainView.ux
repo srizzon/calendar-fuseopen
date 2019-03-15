@@ -1,0 +1,7 @@
+<App>
+	<Router ux:Name="routerCalendar" />
+
+	<Navigator Transition="None" DefaultPath="calendarView">
+		<CalendarView ux:Template="calendarView" routerCalendar="routerCalendar" />
+	</Navigator>
+</App>

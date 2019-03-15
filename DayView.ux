@@ -1,0 +1,21 @@
+<Page ux:Class="DayView" Height="42%" Alignment="Bottom">
+	<Router ux:Dependency="routerCalendar" />
+	<JavaScript File="DayView.js" />
+
+	<Activated>
+		<Callback Handler="{reloadCalendar}" />
+	</Activated>
+
+	<StackPanel Padding="20,0" Orientation="Vertical" Alignment="Left" Width="100%">
+		<Text Alignment="Left" FontSize="30" Value="{text}" Color="{Resource SecondColor}" Font="MontBlack" />
+		<Text Alignment="Left" FontSize="10" Value="{label}" Color="{Resource SecondColor}" Font="MontRegular" />
+
+		<StackPanel Alignment="Center" Margin="0,20">
+			<Text Value="Day Page!" TextWrapping="Wrap" Color="SecondColor" TextAlignment="Left" Alignment="Center"></Text>
+		</StackPanel>
+	</StackPanel>
+
+	<Transition>
+		<Move Y=".5" RelativeTo="ParentSize" Duration="0.3" Easing="CubicIn" />
+	</Transition>
+</Page>
